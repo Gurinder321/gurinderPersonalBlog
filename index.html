@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gurinder's Blog</title>
+  <title>pgLang</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Freight+Display+Pro:ital@0;1&family=Suisse+Int%27l:wght@300;400&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap');
-
     *, *::before, *::after {
       margin: 0;
       padding: 0;
@@ -15,168 +12,67 @@
     }
 
     :root {
-      --bg: #d9d9d6;
-      --text: #1a1a1a;
-      --muted: #888;
-      --line: rgba(0,0,0,0.12);
-      --hover-bg: rgba(0,0,0,0.04);
-      --expand-bg: #cfcfcc;
+      --bg: #d4d4d1;
+      --text: #1c1c1c;
+      --muted: #999;
+      --line: rgba(0,0,0,0.1);
     }
 
     html, body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 16px;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 14px;
       min-height: 100vh;
     }
 
-    /* NAV */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 28px;
-      background: var(--bg);
-      z-index: 100;
-      border-bottom: 1px solid var(--line);
+      padding: 18px 28px;
     }
 
     .nav-logo {
-      font-family: 'DM Mono', monospace;
-      font-weight: 300;
-      font-size: 14px;
-      letter-spacing: 0.01em;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13.5px;
       color: var(--text);
       text-decoration: none;
+      font-weight: 400;
     }
 
-    .nav-icons {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .nav-icon {
-      width: 16px;
-      height: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0.5;
-      transition: opacity 0.2s;
-    }
-
-    .nav-icon:hover { opacity: 1; }
-
-    .icon-circle {
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      border: 1px solid var(--text);
-    }
-    .icon-triangle {
-      width: 0; height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-bottom: 10px solid var(--text);
-    }
-    .icon-dot {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--text);
-    }
-    .icon-plus {
-      font-size: 18px;
-      font-weight: 300;
-      color: var(--text);
-      line-height: 1;
-      font-family: 'DM Mono', monospace;
-    }
-
-    /* MAIN */
     main {
-      padding-top: 52px;
-      max-width: 900px;
-      margin: 0 auto;
+      padding: 28px 0 80px;
     }
 
-    /* ENTRY */
     .entry {
-      border-bottom: 1px solid var(--line);
       cursor: pointer;
-      transition: background 0.15s;
-    }
-
-    .entry:first-child {
-      border-top: 1px solid var(--line);
-      margin-top: 40px;
     }
 
     .entry-header {
       display: grid;
-      grid-template-columns: 120px 1fr;
-      align-items: baseline;
-      padding: 18px 28px;
-      gap: 0;
-      transition: background 0.15s;
-    }
-
-    .entry:hover .entry-header {
-      background: var(--hover-bg);
+      grid-template-columns: 110px 1fr;
+      padding: 5px 28px;
     }
 
     .entry-date {
-      font-family: 'DM Mono', monospace;
-      font-size: 11.5px;
-      font-weight: 300;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13px;
       color: var(--muted);
-      letter-spacing: 0.03em;
-      padding-top: 2px;
-    }
-
-    .entry-title-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
+      padding-top: 1px;
+      font-weight: 400;
     }
 
     .entry-title {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 17px;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 14px;
       font-weight: 400;
-      letter-spacing: 0.005em;
-      line-height: 1.4;
       color: var(--text);
+      line-height: 1.5;
     }
 
-    .entry-arrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.2s;
-      flex-shrink: 0;
-      opacity: 0;
-    }
-
-    .entry:hover .entry-arrow {
-      opacity: 1;
-    }
-
-    .entry.open .entry-arrow {
-      transform: rotate(90deg);
-      opacity: 1;
-    }
-
-    /* EXPANDED CONTENT */
+    /* EXPANDED */
     .entry-body {
       display: grid;
       grid-template-rows: 0fr;
-      transition: grid-template-rows 0.4s cubic-bezier(0.4,0,0.2,1);
+      transition: grid-template-rows 0.32s ease;
     }
 
     .entry.open .entry-body {
@@ -189,143 +85,162 @@
 
     .entry-content {
       display: grid;
-      grid-template-columns: 120px 1fr;
-      padding: 0 28px 32px;
-      gap: 0;
-      background: var(--expand-bg);
-    }
-
-    .entry-content-date-col {
-      padding-top: 24px;
+      grid-template-columns: 110px 1fr;
+      padding: 4px 28px 22px;
     }
 
     .entry-content-date {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      font-weight: 300;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 12.5px;
       color: var(--muted);
-      letter-spacing: 0.05em;
+      padding-top: 1px;
     }
 
     .entry-content-body {
-      padding-top: 24px;
-    }
-
-    .entry-content-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 300;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .entry-content-text {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 16px;
-      line-height: 1.75;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13.5px;
+      line-height: 1.72;
       color: var(--text);
-      max-width: 540px;
+      max-width: 520px;
     }
 
-    .entry-content-text p + p {
-      margin-top: 12px;
-    }
-
-    .entry-content-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-
-    .tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border: 1px solid rgba(0,0,0,0.2);
-      padding: 3px 10px;
-      color: var(--muted);
-    }
-
-    .entry-content-divider {
-      grid-column: 1 / -1;
-      height: 1px;
-      background: var(--line);
-      margin-bottom: 20px;
-    }
-
-    /* Footer */
-    footer {
-      padding: 60px 28px;
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      font-weight: 300;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      max-width: 900px;
-      margin: 0 auto;
+    .entry-content-body p + p {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="#">Gurinder</a>
-  <div class="nav-icons">
-    <div class="nav-icon"><div class="icon-circle"></div></div>
-    <div class="nav-icon"><div class="icon-triangle"></div></div>
-    <div class="nav-icon"><div class="icon-dot"></div></div>
-    <div class="nav-icon"><span class="icon-plus">+</span></div>
-  </div>
+  <a class="nav-logo" href="#">pgLang</a>
 </nav>
 
 <main id="timeline"></main>
 
-<footer>© Gurinder's Blog</footer>
-
 <script>
 const entries = [
   {
-    date: "26-05-12",
-    title: "Welcome to my blog.",
-    label: "Post",
-    body: "This is the beginning of something new. A space to share thoughts, ideas, and work.",
-    tags: ["Blog", "2026"]
+    date: "26-03-05",
+    title: "Good Flirts.",
+    body: "Good Flirts. is the latest project from pgLang, arriving in early 2026. A sharp, considered body of work that pushes the boundaries of contemporary sound and visual language."
+  },
+  {
+    date: "26-02-23",
+    title: "Birds & the Bees.",
+    body: "Birds & the Bees. — a pgLang release. Delicate, expansive, and precise. An intimate record shaped by restraint and intention."
+  },
+  {
+    date: "26-02-20",
+    title: "Ca$ino.",
+    body: "Ca$ino. A new release from pgLang. Dense with texture and narrative, Ca$ino signals a continued evolution in sound and concept."
+  },
+  {
+    date: "25-07-31",
+    title: "Project 3 Agency",
+    body: "pgLang expands its footprint with Project 3 Agency — a new creative services arm focused on artist development, cultural direction, and long-form brand storytelling."
+  },
+  {
+    date: "25-05-29",
+    title: "Dave Free for Bottega Veneta.",
+    body: "Dave Free appears in a campaign for Bottega Veneta. Shot with the clarity and restraint that defines the house, the collaboration speaks to pgLang's deepening relationship with fashion and luxury."
+  },
+  {
+    date: "25-05-25",
+    title: "lose.",
+    body: "lose. — a pgLang release. Meditative and unhurried. A work that sits in tension, in the space between certainty and surrender."
+  },
+  {
+    date: "25-04-22",
+    title: "Kendrick Lamar for Chanel.",
+    body: "Kendrick Lamar stars in a campaign for Chanel. The collaboration marks a cultural watershed moment — hip-hop's most decorated artist stepping fully into haute couture's most storied house."
+  },
+  {
+    date: "25-04-19",
+    title: "Grand National Tour.",
+    body: "The Grand National Tour. Kendrick Lamar on the road across North America. A live experience calibrated with the same precision as the studio work."
+  },
+  {
+    date: "25-04-11",
+    title: "luther.",
+    body: "luther. — a collaboration between Kendrick Lamar and SZA. Released through pgLang, the track arrived as a surprise and immediately defined the cultural conversation of early 2025."
+  },
+  {
+    date: "25-03-18",
+    title: "Most Innovative Companies 2025.",
+    body: "pgLang is named to the Most Innovative Companies list for 2025. The recognition reflects the company's unique position at the intersection of music, visual art, fashion, and cultural enterprise."
+  },
+  {
+    date: "25-02-09",
+    title: "Super Bowl LIX Halftime Show. Highest rated in history",
+    body: "Kendrick Lamar performs at Super Bowl LIX in New Orleans. The show becomes the highest rated halftime performance in the event's history. Directed by Dave Free and pgLang."
+  },
+  {
+    date: "25-02-02",
+    title: "Dave Free wins Grammy for 'Not Like Us'.",
+    body: "Dave Free takes home the Grammy Award for his production work on 'Not Like Us.' A landmark recognition for one of the most important creative collaborations in contemporary music."
+  },
+  {
+    date: "25-02-02",
+    title: "Kendrick Lamar wins 5 Grammys for 'Not Like Us'.",
+    body: "Kendrick Lamar wins five Grammy Awards for 'Not Like Us,' including Record of the Year and Song of the Year. An unprecedented sweep for a diss record turned cultural anthem."
+  },
+  {
+    date: "24-11-25",
+    title: "squabble up.",
+    body: "squabble up. — released as part of GNX. The track arrived with the album and quickly broke streaming records, a kinetic, confident statement that anchored the project's reception."
+  },
+  {
+    date: "24-11-22",
+    title: "GNX.",
+    body: "GNX. — Kendrick Lamar's surprise album, released without announcement on November 22, 2024. Executive produced by Dave Free and Kendrick Lamar. Distributed via pgLang. Eleven tracks, no features listed, no promotion."
+  },
+  {
+    date: "24-09-08",
+    title: "Super Bowl LIX. New Orleans. February 2025.",
+    body: "It is announced that Kendrick Lamar will headline the Super Bowl LIX halftime show in New Orleans. pgLang begins production immediately."
+  },
+  {
+    date: "24-07-04",
+    title: "Not Like Us. Directed by Dave Free & Kendrick Lamar.",
+    body: "The music video for 'Not Like Us' premieres on July 4th. Directed by Dave Free and Kendrick Lamar. Shot in Compton. The video captures the street celebration of a community and a victory."
+  },
+  {
+    date: "24-06-05",
+    title: "The Pop Out.",
+    body: "The Pop Out — Ken & Friends. Kendrick Lamar performs a landmark concert at Kia Forum in Inglewood, California. Broadcast live, it becomes one of the most watched music events of the year."
+  },
+  {
+    date: "24-01-20",
+    title: "Chanel \"The Button\" Written and Directed by Dave Free. Scored by Kendrick Lamar.\nServiced by pgLang.",
+    body: "Chanel releases 'The Button' — a short film written and directed by Dave Free, scored by Kendrick Lamar, and serviced through pgLang. A meditation on time, craft, and legacy told through the language of haute couture."
+  },
+  {
+    date: "23-12-05",
+    title: "'The Melodic Blue' Visual Now Streaming.",
+    body: "'The Melodic Blue' visual project arrives on streaming platforms. Baby Keem's debut album finds its full visual companion — a cohesive film that expands the world of the record."
+  },
+  {
+    date: "23-11-03",
+    title: "Move Afrika.",
+    body: "pgLang announces Move Afrika — a touring initiative that will bring large-scale live music experiences to the African continent. A long-term commitment to building infrastructure, community, and celebration."
   }
 ];
 
 const timeline = document.getElementById('timeline');
 
-entries.forEach((entry, i) => {
+entries.forEach(entry => {
   const el = document.createElement('div');
   el.className = 'entry';
   el.innerHTML = `
     <div class="entry-header">
       <span class="entry-date">${entry.date}</span>
-      <div class="entry-title-row">
-        <span class="entry-title">${entry.title}</span>
-        <span class="entry-arrow">→</span>
-      </div>
+      <span class="entry-title">${entry.title.replace(/\n/g, '<br>')}</span>
     </div>
     <div class="entry-body">
       <div class="entry-body-inner">
         <div class="entry-content">
-          <div class="entry-content-date-col">
-            <span class="entry-content-date">${entry.date}</span>
-          </div>
-          <div class="entry-content-body">
-            <div class="entry-content-label">${entry.label}</div>
-            <div class="entry-content-text">
-              <p>${entry.body}</p>
-            </div>
-            <div class="entry-content-tags">
-              ${entry.tags.map(t => `<span class="tag">${t}</span>`).join('')}
-            </div>
-          </div>
+          <span class="entry-content-date">${entry.date}</span>
+          <div class="entry-content-body"><p>${entry.body}</p></div>
         </div>
       </div>
     </div>
@@ -333,7 +248,6 @@ entries.forEach((entry, i) => {
 
   el.querySelector('.entry-header').addEventListener('click', () => {
     const isOpen = el.classList.contains('open');
-    // close all
     document.querySelectorAll('.entry.open').forEach(e => e.classList.remove('open'));
     if (!isOpen) el.classList.add('open');
   });
