@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pgLang</title>
+  <title>Gurinder</title>
   <style>
     *, *::before, *::after {
       margin: 0;
@@ -107,15 +107,51 @@
     .entry-content-body p + p {
       margin-top: 10px;
     }
+
+    footer {
+      padding: 40px 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      justify-items: center;
+      gap: 20px;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .footer-left {
+      justify-self: start;
+    }
+
+    .footer-center {
+      justify-self: center;
+    }
+
+    .footer-center img {
+      height: 24px;
+      width: auto;
+    }
+
+    .footer-right {
+      justify-self: end;
+    }
   </style>
 </head>
 <body>
 
 <nav>
-  <a class="nav-logo" href="#">pgLang</a>
+  <a class="nav-logo" href="#">Gurinder</a>
 </nav>
 
 <main id="timeline"></main>
+
+<footer>
+  <div class="footer-left">© 2026 Gurinder</div>
+  <div class="footer-center"><img src="fire.png" alt="fire"></div>
+  <div class="footer-right">IG X</div>
+</footer>
 
 <script>
 const entries = [
