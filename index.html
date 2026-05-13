@@ -1,11 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gurinder's Blog</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Freight+Display+Pro:ital@0;1&family=Suisse+Int%27l:wght@300;400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap');
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #d9d9d6;
+      --text: #1a1a1a;
+      --muted: #888;
+      --line: rgba(0,0,0,0.12);
+      --hover-bg: rgba(0,0,0,0.04);
+      --expand-bg: #cfcfcc;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 16px;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      background: var(--bg);
+      z-index: 100;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-icon {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .nav-icon:hover { opacity: 1; }
+
+    .icon-circle {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 1px solid var(--text);
+    }
+    .icon-triangle {
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 10px solid var(--text);
+    }
+    .icon-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--text);
+    }
+    .icon-plus {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* MAIN */
+    main {
+      padding-top: 52px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ENTRY */
+    .entry {
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .entry:first-child {
+      border-top: 1px solid var(--line);
+      margin-top: 40px;
+    }
+
+    .entry-header {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: baseline;
+      padding: 18px 28px;
+      gap: 0;
+      transition: background 0.15s;
+    }
+
+    .entry:hover .entry-header {
+      background: var(--hover-bg);
+    }
+
+    .entry-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      padding-top: 2px;
+    }
+
+    .entry-title-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .entry-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.005em;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .entry-arrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.2s;
+      flex-shrink: 0;
+      opacity: 0;
+    }
+
+    .entry:hover .entry-arrow {
+      opacity: 1;
+    }
+
+    .entry.open .entry-arrow {
+      transform: rotate(90deg);
+      opacity: 1;
+    }
+
+    /* EXPANDED CONTENT */
+    .entry-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .entry.open .entry-body {
+      grid-template-rows: 1fr;
+    }
+
+    .entry-body-inner {
+      overflow: hidden;
+    }
+
+    .entry-content {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      padding: 0 28px 32px;
+      gap: 0;
+      background: var(--expand-bg);
+    }
+
+    .entry-content-date-col {
+      padding-top: 24px;
+    }
+
+    .entry-content-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .entry-content-body {
+      padding-top: 24px;
+    }
+
+    .entry-content-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .entry-content-text {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text);
+      max-width: 540px;
+    }
+
+    .entry-content-text p + p {
+      margin-top: 12px;
+    }
+
+    .entry-content-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(0,0,0,0.2);
+      padding: 3px 10px;
+      color: var(--muted);
+    }
+
+    .entry-content-divider {
+      grid-column: 1 / -1;
+      height: 1px;
+      background: var(--line);
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+
+<nav>
+  <a class="nav-logo" href="#">Gurinder</a>
+  <div class="nav-icons">
+    <div class="nav-icon"><div class="icon-circle"></div></div>
+    <div class="nav-icon"><div class="icon-triangle"></div></div>
+    <div class="nav-icon"><div class="icon-dot"></div></div>
+    <div class="nav-icon"><span class="icon-plus">+</span></div>
+  </div>
+</nav>
+
+<main id="timeline"></main>
+
+<footer>© Gurinder's Blog</footer>
+
+<script>
+const entries = [
+  {
+    date: "26-05-12",
+    title: "Welcome to my blog.",
+    label: "Post",
+    body: "This is the beginning of something new. A space to share thoughts, ideas, and work.",
+    tags: ["Blog", "2026"]
+  }
+];
+
+const timeline = document.getElementById('timeline');
+
+entries.forEach((entry, i) => {
+  const el = document.createElement('div');
+  el.className = 'entry';
+  el.innerHTML = `
+    <div class="entry-header">
+      <span class="entry-date">${entry.date}</span>
+      <div class="entry-title-row">
+        <span class="entry-title">${entry.title}</span>
+        <span class="entry-arrow">→</span>
+      </div>
+    </div>
+    <div class="entry-body">
+      <div class="entry-body-inner">
+        <div class="entry-content">
+          <div class="entry-content-date-col">
+            <span class="entry-content-date">${entry.date}</span>
+          </div>
+          <div class="entry-content-body">
+            <div class="entry-content-label">${entry.label}</div>
+            <div class="entry-content-text">
+              <p>${entry.body}</p>
+            </div>
+            <div class="entry-content-tags">
+              ${entry.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  el.querySelector('.entry-header').addEventListener('click', () => {
+    const isOpen = el.classList.contains('open');
+    // close all
+    document.querySelectorAll('.entry.open').forEach(e => e.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  });
+
+  timeline.appendChild(el);
+});
+</script>
 </body>
 </html>
